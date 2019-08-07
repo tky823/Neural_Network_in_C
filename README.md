@@ -6,3 +6,4 @@ I implemeted multi layer perceptron in C.
 
 ## activation_function_example
 "activation_function_example" directory has sample programs on activation function.
+Do `gcc main_activation_function.c` , and then execute `./a.out`.
