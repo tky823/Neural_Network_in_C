@@ -1,1 +1,1 @@
-# Neural_Network_in_C
+# Neural Network in C
