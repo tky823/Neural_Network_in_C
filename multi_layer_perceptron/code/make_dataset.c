@@ -98,8 +98,10 @@ int main(int argc, char **argv) {
             for(m = 0; m < DATA_LINE; m++) {
                 LSB = pixel_line % 10;
                 if(LSB) {
-                    pixel = rand_normal(0.8f, 0.1f);
+                    pixel = rand_normal(0.8f, 0.2f);
                     if(pixel > 1.0f) {
+                        pixel = 1.0f;
+                    } else if(pixel < 0.0f) {
                         pixel = 0.0f;
                     }
                     fprintf(fp, "%f\n", pixel);
@@ -133,8 +135,10 @@ int main(int argc, char **argv) {
             for(m = 0; m < DATA_LINE; m++) {
                 LSB = pixel_line % 10;
                 if(LSB) {
-                    pixel = rand_normal(0.8f, 0.1f);
+                    pixel = rand_normal(0.8f, 0.2f);
                     if(pixel > 1.0f) {
+                        pixel = 1.0f;
+                    } else if(pixel < 0.0f) {
                         pixel = 0.0f;
                     }
                     fprintf(fp, "%f\n", pixel);
@@ -168,8 +172,10 @@ int main(int argc, char **argv) {
             for(m = 0; m < DATA_LINE; m++) {
                 LSB = pixel_line % 10;
                 if(LSB) {
-                    pixel = rand_normal(0.8f, 0.1f);
+                    pixel = rand_normal(0.8f, 0.2f);
                     if(pixel > 1.0f) {
+                        pixel = 1.0f;
+                    } else if(pixel < 0.0f) {
                         pixel = 0.0f;
                     }
                     fprintf(fp, "%f\n", pixel);
