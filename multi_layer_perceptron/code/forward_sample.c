@@ -11,7 +11,6 @@
 MODEL_PARAMETER build_model(void);
 void forward(MODEL_PARAMETER model_parameter);
 DATA *loda_data(char *file_path, int *N_data);
-void reset_dE_dw_total(MODEL_PARAMETER model_parameter);
 
 int main(int argc, char **argv) {
     int id, N;
