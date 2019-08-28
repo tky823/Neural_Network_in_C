@@ -44,7 +44,7 @@ void setup_parameters(MODEL_PARAMETER model_parameter) {
         int d_max = D[l];
         int d_next_layer = D[l + 1];
         
-        float sigma = sqrtf(2.0f / (float)d_max);
+        float sigma = 2.0f / sqrtf((float)d_max);
         
         if((w[l] = (float **)malloc((d_max + 1) * sizeof(float *))) == NULL) {
             exit(-1);
@@ -56,7 +56,7 @@ void setup_parameters(MODEL_PARAMETER model_parameter) {
             }
             
             for(j = 0; j <= d_next_layer; j++) {
-                // He initialization
+                // Xavier initialization
                 w[l][i][j] = rand_normal(0.0f, sigma);
             }
         }
