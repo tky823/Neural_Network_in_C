@@ -11,6 +11,7 @@ float *d_sigmoid(float *a, int D);
 float **d_softmax(float *a, int K);
 
 float *step(float *a, int D) {
+    int b = 0;
     int d;
     float *z = NULL;
     
