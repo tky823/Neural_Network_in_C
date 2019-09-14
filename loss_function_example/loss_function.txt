@@ -1,0 +1,6 @@
+=====mean squared error=====
+E: 0.777778
+
+=====cross entropy=====
+E: 0.693147
+
