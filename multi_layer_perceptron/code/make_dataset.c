@@ -6,14 +6,13 @@
 #define MAX_LINE 256
 #define DATA_LINE 5
 
+void write_data(char file_path[MAX_LINE], int ***line, int K, int *n_sample, int N);
 
 int main(int argc, char **argv) {
-    int i, j, k, m, n, K;
+    int i, j, k, n, K;
     int N_train = 10000, N_validation = 100, N_test = 100;
     int *n_sample = NULL;
     int ***line = NULL;
-    int pixel_line, LSB;
-    float pixel;
     
     FILE *fp = NULL;
     
@@ -80,88 +79,35 @@ int main(int argc, char **argv) {
     
     // Write "train_data.txt"
     sprintf(file_path, "%s/train_data.txt", data_path);
-    
-    if((fp = fopen(file_path, "w")) == NULL) {
-        exit(-1);
-    }
-    
-    fprintf(fp, "%d\n", N_train);
-    
-    for(n = 0; n < N_train; n++) {
-        k = rand() % K + 1;
-        i = rand() % n_sample[k] + 1;
-        
-        fprintf(fp, "%d\n", k);
-        
-        for(j = 0; j < DATA_LINE; j++) {
-            pixel_line = line[k][i][j];
-            for(m = 0; m < DATA_LINE; m++) {
-                LSB = pixel_line % 10;
-                if(LSB) {
-                    pixel = rand_normal(0.8f, 0.2f);
-                    if(pixel > 1.0f) {
-                        pixel = 1.0f;
-                    } else if(pixel < 0.0f) {
-                        pixel = 0.0f;
-                    }
-                    fprintf(fp, "%f\n", pixel);
-                } else {
-                    fprintf(fp, "0.0\n");
-                }
-                pixel_line /= 10;
-            }
-        }
-    }
-    
-    fclose(fp);
+    write_data(file_path, line, K, n_sample, N_train);
     
     // Write "validation_data.txt"
     sprintf(file_path, "%s/validation_data.txt", data_path);
+    write_data(file_path, line, K, n_sample, N_train);
     
-    if((fp = fopen(file_path, "w")) == NULL) {
-        exit(-1);
-    }
-    
-    fprintf(fp, "%d\n", N_validation);
-    
-    for(n = 0; n < N_validation; n++) {
-        k = rand() % K + 1;
-        i = rand() % n_sample[k] + 1;
-        
-        fprintf(fp, "%d\n", k);
-        
-        for(j = 0; j < DATA_LINE; j++) {
-            pixel_line = line[k][i][j];
-            for(m = 0; m < DATA_LINE; m++) {
-                LSB = pixel_line % 10;
-                if(LSB) {
-                    pixel = rand_normal(0.8f, 0.2f);
-                    if(pixel > 1.0f) {
-                        pixel = 1.0f;
-                    } else if(pixel < 0.0f) {
-                        pixel = 0.0f;
-                    }
-                    fprintf(fp, "%f\n", pixel);
-                } else {
-                    fprintf(fp, "0.0\n");
-                }
-                pixel_line /= 10;
-            }
-        }
-    }
-    
-    fclose(fp);
     
     // Write "test_data.txt"
     sprintf(file_path, "%s/test_data.txt", data_path);
+    write_data(file_path, line, K, n_sample, N_train);
+    
+    return 0;
+}
+
+void write_data(char file_path[MAX_LINE], int ***line, int K, int *n_sample, int N) {
+    int i, j, k, m, n;
+    
+    FILE *fp = NULL;
+    
+    int pixel_line, LSB;
+    float pixel;
     
     if((fp = fopen(file_path, "w")) == NULL) {
         exit(-1);
     }
     
-    fprintf(fp, "%d\n", N_test);
+    fprintf(fp, "%d\n", N);
     
-    for(n = 0; n < N_test; n++) {
+    for(n = 0; n < N; n++) {
         k = rand() % K + 1;
         i = rand() % n_sample[k] + 1;
         
@@ -169,6 +115,7 @@ int main(int argc, char **argv) {
         
         for(j = 0; j < DATA_LINE; j++) {
             pixel_line = line[k][i][j];
+            float flatten_pixels[DATA_LINE] = {0};
             for(m = 0; m < DATA_LINE; m++) {
                 LSB = pixel_line % 10;
                 if(LSB) {
@@ -178,16 +125,17 @@ int main(int argc, char **argv) {
                     } else if(pixel < 0.0f) {
                         pixel = 0.0f;
                     }
-                    fprintf(fp, "%f\n", pixel);
                 } else {
-                    fprintf(fp, "0.0\n");
+                    pixel = 0.0f;
                 }
+                flatten_pixels[DATA_LINE - m - 1] = pixel;
                 pixel_line /= 10;
+            }
+            for(m = 0; m < DATA_LINE; m++) {
+                fprintf(fp, "%f\n", flatten_pixels[m]);
             }
         }
     }
     
     fclose(fp);
-    
-    return 0;
 }
