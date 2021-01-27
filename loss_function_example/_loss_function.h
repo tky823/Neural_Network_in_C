@@ -1,6 +1,8 @@
 #include <math.h>
 #include <stdlib.h>
 
+float EPS = 1e-12;
+
 float mean_squared_error(float *y, float *t, int D);
 float cross_entropy(float *y, float *t, int K);
 float *d_mean_squared_error(float *y, float *t, int D);
@@ -59,7 +61,7 @@ float *d_cross_entropy(float *y, float *t, int K) {
     dE_dy[0] = 0.0f;
     
     for(k = 1; k <= K; k++) {
-        dE_dy[k] = - (t[k] / y[k]);
+        dE_dy[k] = - (t[k] / (y[k] + EPS));
     }
     
     return dE_dy;
