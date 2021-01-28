@@ -26,7 +26,7 @@ float cross_entropy(float *y, float *t, int K) {
     float E = 0.0f;
     
     for(k = 1; k <= K; k++) {
-        E -= t[k] * logf(y[k]);
+        E -= t[k] * logf(y[k] + EPS);
     }
     
     return E;
